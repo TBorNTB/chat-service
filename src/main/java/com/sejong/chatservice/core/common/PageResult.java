@@ -12,24 +12,23 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PageResponse<T> {
+public class PageResult<T> {
 
     private List<T> content;
     private LocalDateTime nextCursor;
     private boolean hasNext;
 
-    public static <T extends HasCreatedAt> PageResponse<T> from(List<T> content, int size) {
+    public static <T extends HasCreatedAt> PageResult<T> from(List<T> content, int size) {
         LocalDateTime nextCursor = content.isEmpty()
                 ? null
                 : content.get(content.size() - 1).getCreatedAt();
 
         boolean hasNext = content.size() == size;
 
-        return PageResponse.<T>builder()
+        return PageResult.<T>builder()
                 .content(content)
                 .nextCursor(nextCursor)
                 .hasNext(hasNext)
                 .build();
     }
-
 }
